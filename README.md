@@ -5,7 +5,8 @@ It uses inmemory database implemented in the [repository](https://github.com/hil
 
 ### What You Will Need
 JDK 8  
-IntelliJ
+IntelliJ  
+Docker (Only for Dockerizing)
 
 ### What It Supports
 Docker  
@@ -70,3 +71,11 @@ This project includes unit and integration tests in the [test directory](https:/
 In some of the tests, I used HttpUriRequest and HttpResponse classes for testing the API's
 GET and DELETE methods. In those tests, SC_OK means its status code is 200 and it works fine. 
 SC_NOT_FOUND means its status code is 404 and it could not find the object.
+
+### Bookstore Application Dockerizing
+There is a [Dockerfile](https://github.com/hilal-demir/BookstoreAssessment/blob/master/Dockerfile) in the project for simply making an image of the project and run it 
+in the Docker container. For making the image:  
+Open terminal in the directory where your Dockerfile is in and type "./mvnw spring-boot:build-image -Dspring-boot.build-image.imageName=springio/gs-spring-boot-docker"  
+For running the docker image:  
+Type "docker run -p 8080:8080 -t springio/gs-spring-boot-docker"  
+The application is then available on http://localhost:8080 
