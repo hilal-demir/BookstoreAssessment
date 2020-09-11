@@ -1,7 +1,6 @@
 package com.assessment.bookstore.repository;
 
-import  com.assessment.bookstore.model.Book;
-import com.assessment.bookstore.model.Bookstore;
+import com.assessment.bookstore.model.Book;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;

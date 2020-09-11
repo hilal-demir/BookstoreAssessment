@@ -31,46 +31,60 @@ public class BookstoreServiceImpl implements BookstoreService{
     public List<Category> getAllCategories() {
         return categoryRepository.getAllCategories();
     }
+
     public void create(Category category) {
         categoryRepository.create(category);
     }
+
     public Category getCategory(String name) {
         return categoryRepository.getCategory(name);
     }
+
     public void removeCategory(int id) {
         categoryRepository.removeCategory(id);
     }
+
     public List<Bookstore> getAllBookstores() {
         return bookstoreRepository.getAllBookstores();
     }
+
     public void create(Bookstore bookstore) {
         bookstoreRepository.create(bookstore);
     }
+
     public Bookstore getBookstore(String bookstoreName) {
         return bookstoreRepository.getBookstore(bookstoreName);
     }
+
     public void removeBookstore(int id) {
         bookstoreRepository.removeBookstore(id);
     }
+
     public List<Book> getAllBooks() {
         return bookRepository.getAllBooks();
     }
+
     public Book getBook(String bookName) {
         return bookRepository.getBook(bookName);
     }
     public void create(Book book) {
         bookRepository.create(book);
     }
+
     public List<Book> getBooksByCategory(String categoryName) {
         return bookRepository.getBooksByCategory(categoryName);
     }
+
     public List<Book> getBooksByBookstore(String bookstoreName) {
         return bookRepository.getBooksByBookstore(bookstoreName);
     }
+
     public void changeCategory(String bookName, String categoryName) {
         bookRepository.changeCategory(bookName,categoryName);
     }
+
     public void removeBook(int id) {
         bookRepository.removeBook(id);
     }
+
 }
