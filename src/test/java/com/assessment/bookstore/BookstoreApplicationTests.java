@@ -45,13 +45,13 @@ public class BookstoreApplicationTests {
         bookstoreService.create(book);
         assertEquals(category.getName(), bookstoreService.getCategory("trial").getName());
         assertEquals(bookstore.getName(),bookstoreService.getBookstore("store9").getName());
-        assertEquals(book.getId(), bookstoreService.getBook("deneme").getName());
+        assertEquals(book.getName(), bookstoreService.getBook("deneme").getName());
     }
 
     @Test
     public void removeBookTest() throws IOException {
         int id = 2;
-        HttpUriRequest request = new HttpDelete("http://localhost:8080/api/books" + id);
+        HttpUriRequest request = new HttpDelete("http://localhost:8080/api/books/" + id);
         HttpResponse httpResponse = HttpClientBuilder.create().build().execute(request);
         assertThat(httpResponse.getStatusLine().getStatusCode(), equalTo(HttpStatus.SC_OK));
     }
@@ -59,7 +59,7 @@ public class BookstoreApplicationTests {
     @Test
     public void removeBookstoreTest() throws IOException {
         int id = 2;
-        HttpUriRequest request = new HttpDelete("http://localhost:8080/api/bookstores" + id);
+        HttpUriRequest request = new HttpDelete("http://localhost:8080/api/bookstores/" + id);
         HttpResponse httpResponse = HttpClientBuilder.create().build().execute(request);
         assertThat(httpResponse.getStatusLine().getStatusCode(), equalTo(HttpStatus.SC_OK));
     }
@@ -67,33 +67,9 @@ public class BookstoreApplicationTests {
     @Test
     public void removeCategoryTest() throws IOException {
         int id = 2;
-        HttpUriRequest request = new HttpDelete("http://localhost:8080/api/categories" + id);
+        HttpUriRequest request = new HttpDelete("http://localhost:8080/api/categories/" + id);
         HttpResponse httpResponse = HttpClientBuilder.create().build().execute(request);
         assertThat(httpResponse.getStatusLine().getStatusCode(), equalTo(HttpStatus.SC_OK));
-    }
-
-    @Test
-    public void bookDoesNotExistsTest() throws IOException {
-        int id = 45;
-        HttpUriRequest request = new HttpGet("http://localhost:8080/api/bookstores" + id);
-        HttpResponse httpResponse = HttpClientBuilder.create().build().execute(request);
-        assertThat(httpResponse.getStatusLine().getStatusCode(), equalTo(HttpStatus.SC_NOT_FOUND));
-    }
-
-    @Test
-    public void categoryDoesNotExistTest() throws IOException {
-        int id = 45;
-        HttpUriRequest request = new HttpGet("http://localhost:8080/api/bookstores" + id);
-        HttpResponse httpResponse = HttpClientBuilder.create().build().execute(request);
-        assertThat(httpResponse.getStatusLine().getStatusCode(), equalTo(HttpStatus.SC_NOT_FOUND));
-    }
-
-    @Test
-    public void bookstoreDoesNotExistTest() throws IOException {
-        int id = 45;
-        HttpUriRequest request = new HttpGet("http://localhost:8080/api/bookstores" + id);
-        HttpResponse httpResponse = HttpClientBuilder.create().build().execute(request);
-        assertThat(httpResponse.getStatusLine().getStatusCode(), equalTo(HttpStatus.SC_NOT_FOUND));
     }
 
     @Test
