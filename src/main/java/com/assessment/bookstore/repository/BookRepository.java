@@ -35,11 +35,11 @@ public class BookRepository{
     static
     {
         books.add(new Book(1, "John",categoryRepository.getCategory("fiction"), bookstoreRepository.getBookstore("store1"),4*bookstoreRepository.getBookstore("store1").getBookFactor()));
-        books.add(new Book(2, "Robert",categoryRepository.getCategory("child"), bookstoreRepository.getBookstore("store2"), 5));
-        books.add(new Book(3, "Adam", categoryRepository.getCategory("mystery"), bookstoreRepository.getBookstore("store3"), 3));
-        books.add(new Book(4, "Andrew", categoryRepository.getCategory("short story"), bookstoreRepository.getBookstore("store4"), 3));
-        books.add(new Book(5, "Jack", categoryRepository.getCategory("biography"), bookstoreRepository.getBookstore("store5"), 1));
-        books.add(new Book(6, "Jack", categoryRepository.getCategory("biography"), bookstoreRepository.getBookstore("store2"), 3));
+        books.add(new Book(2, "Robert",categoryRepository.getCategory("child"), bookstoreRepository.getBookstore("store2"), 5*bookstoreRepository.getBookstore("store2").getBookFactor()));
+        books.add(new Book(3, "Adam", categoryRepository.getCategory("mystery"), bookstoreRepository.getBookstore("store3"), 3*bookstoreRepository.getBookstore("store3").getBookFactor()));
+        books.add(new Book(4, "Andrew", categoryRepository.getCategory("short story"), bookstoreRepository.getBookstore("store4"), 3*bookstoreRepository.getBookstore("store4").getBookFactor()));
+        books.add(new Book(5, "Jack", categoryRepository.getCategory("biography"), bookstoreRepository.getBookstore("store5"), 1*bookstoreRepository.getBookstore("store5").getBookFactor()));
+        books.add(new Book(6, "Jack", categoryRepository.getCategory("biography"), bookstoreRepository.getBookstore("store2"), 3*bookstoreRepository.getBookstore("store2").getBookFactor()));
     }
 
     public List<Book> getAllBooks() {
@@ -55,6 +55,7 @@ public class BookRepository{
         if (book.getId() == null) {
             book.setId(bookCount++);
         }
+        book.setPrice(book.getPrice()*book.getBookstore().getBookFactor());
         books.add(book);
         bookCount++;
     }
