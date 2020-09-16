@@ -21,11 +21,11 @@ User can access the application with the base address "http://localhost:8080/api
 Apis by adding the 'books', 'categories' or 'bookstores' at the and of the base address.  
 
 Create book --> http://localhost:8080/api/books/{store}  
-Get all books --> http://localhost:8080/api/books  
+Get all books (it gives books with their default prices) --> http://localhost:8080/api/books  
 Create/Get all categories --> http://localhost:8080/api/categories  
 Create/Get all bookstores --> http://localhost:8080/api/bookstores  
 Get all books by a category --> http://localhost:8080/api/booksByCategory/{category-name}
-Get all books by a bookstore --> http://localhost:8080/api/booksByBookstore/{bookstore-name}  
+Get all books by a bookstore (it gives books with their bookstore prices) --> http://localhost:8080/api/booksByBookstore/{bookstore-name}  
 Change a book's category --> http://localhost:8080/api/changeCategory/{bookName}/{categoryName}  
 Remove a book --> http://localhost:8080/api/books/{id}  
 Remove a book --> http://localhost:8080/api/categories/{id}  
