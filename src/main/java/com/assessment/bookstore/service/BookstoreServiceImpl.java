@@ -67,8 +67,9 @@ public class BookstoreServiceImpl implements BookstoreService{
     public Book getBook(String bookName) {
         return bookRepository.getBook(bookName);
     }
-    public void create(Book book) {
-        bookRepository.create(book);
+
+    public void create(Book book, String store) {
+        bookRepository.create(book, store);
     }
 
     public List<Book> getBooksByCategory(String categoryName) {

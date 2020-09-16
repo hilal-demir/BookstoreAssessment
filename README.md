@@ -20,7 +20,8 @@ we can use them as web uris in our local system.
 User can access the application with the base address "http://localhost:8080/api/" and access the 
 Apis by adding the 'books', 'categories' or 'bookstores' at the and of the base address.  
 
-Create/Get all books --> http://localhost:8080/api/books  
+Create book --> http://localhost:8080/api/books/{store}  
+Get all books --> http://localhost:8080/api/books  
 Create/Get all categories --> http://localhost:8080/api/categories  
 Create/Get all bookstores --> http://localhost:8080/api/bookstores  
 Get all books by a category --> http://localhost:8080/api/booksByCategory/{category-name}
@@ -71,6 +72,9 @@ This project includes unit and integration tests in the [test directory](https:/
 In some of the tests, I used HttpUriRequest and HttpResponse classes for testing the API's
 GET and DELETE methods. In those tests, SC_OK means its status code is 200 and it works fine. 
 SC_NOT_FOUND means its status code is 404 and it could not find the object.
+
+Some remove tests fail because when removing an object (book, category or bookstore), sometimes it does not remove in the first time
+but in the second time, it removes. 
 
 ### Bookstore Application Dockerizing
 There is a [Dockerfile](https://github.com/hilal-demir/BookstoreAssessment/blob/master/Dockerfile) in the project for simply making an image of the project and run it 

@@ -1,9 +1,6 @@
 package com.assessment.bookstore.repository;
 
 import com.assessment.bookstore.model.Category;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.Setter;
 import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
@@ -17,9 +14,6 @@ import java.util.List;
  * @AllArgsConstuctor lombok annotation generates constructor with all parameters automatically.
  */
 @Repository
-@Getter
-@Setter
-@AllArgsConstructor
 public class CategoryRepository {
 
     private static List<Category> categories = new ArrayList<>();

@@ -32,12 +32,12 @@ public class BookstoreController {
     }
 
     @RequestMapping(value = "/bookstores", method = RequestMethod.POST)
-    public void createBook(@RequestBody Bookstore bookstore) {
+    public void createBookstore(@RequestBody Bookstore bookstore) {
         bookstoreService.create(bookstore);
     }
 
     @RequestMapping(value = "/bookstores/{id}", method = RequestMethod.DELETE)
-    public void removeBook(@PathVariable int id) {
+    public void removeBookstore(@PathVariable int id) {
         bookstoreService.removeBookstore(id);
     }
 

@@ -36,13 +36,13 @@ public class BookstoreApplicationTests {
 
     Category category = new Category(7,"trial");
     Bookstore bookstore = new Bookstore(9, "store9", "Antalya", 2);
-    Book book = new Book(8,"deneme",category,bookstore,10);
+    Book book = new Book(8,"deneme",category,10);
 
     @Test
     public void creationTest() {
         bookstoreService.create(category);
         bookstoreService.create(bookstore);
-        bookstoreService.create(book);
+        bookstoreService.create(book, "store1");
         assertEquals(category.getName(), bookstoreService.getCategory("trial").getName());
         assertEquals(bookstore.getName(),bookstoreService.getBookstore("store9").getName());
         assertEquals(book.getName(), bookstoreService.getBook("deneme").getName());
@@ -95,7 +95,7 @@ public class BookstoreApplicationTests {
 
     @Test
     public void changeCategoryTest() {
-        bookstoreService.create(book);
+        bookstoreService.create(book,"store1");
         bookstoreService.create(category);
         bookstoreService.changeCategory(book.getName(), category.getName());
         assertEquals(bookstoreService.getBook(book.getName()).getCategory().getName(), category.getName());

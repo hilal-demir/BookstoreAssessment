@@ -17,8 +17,6 @@ public class Book {
 
     private Category category;
 
-    private Bookstore bookstore;
-
     private double price;
 
 }

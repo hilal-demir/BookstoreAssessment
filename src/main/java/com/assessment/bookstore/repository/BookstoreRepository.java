@@ -1,9 +1,6 @@
 package com.assessment.bookstore.repository;
 
 import com.assessment.bookstore.model.Bookstore;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.Setter;
 import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
@@ -16,20 +13,14 @@ import java.util.List;
  * @AllArgsConstuctor lombok annotation generates constructor with all parameters automatically.
  */
 @Repository
-@Getter
-@Setter
-@AllArgsConstructor
 public class BookstoreRepository {
 
     private static List<Bookstore> bookstores = new ArrayList<>();
-    public static int bookstoreCount = 5;
+    public static int bookstoreCount = 2;
 
     static {
         bookstores.add(new Bookstore(1, "store1", "Istanbul", 4));
         bookstores.add(new Bookstore(2, "store2", "Izmir", 3));
-        bookstores.add(new Bookstore(3, "store3", "Bursa", 2));
-        bookstores.add(new Bookstore(4, "store4", "Izmit", 2));
-        bookstores.add(new Bookstore(5, "store5", "Van", 1));
     }
 
     public List<Bookstore> getAllBookstores() {

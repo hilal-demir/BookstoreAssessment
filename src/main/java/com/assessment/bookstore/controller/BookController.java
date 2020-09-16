@@ -31,9 +31,9 @@ public class BookController {
         return bookstoreService.getAllBooks();
     }
 
-    @RequestMapping(value = "/books", method = RequestMethod.POST)
-    public void createBook(@RequestBody Book book) {
-        bookstoreService.create(book);
+    @RequestMapping(value = "/books/{store}", method = RequestMethod.POST)
+    public void createBook(@RequestBody Book book, @PathVariable String store) {
+        bookstoreService.create(book, store);
     }
 
     @RequestMapping(value = "/booksByCategory/{category}", method = RequestMethod.GET)

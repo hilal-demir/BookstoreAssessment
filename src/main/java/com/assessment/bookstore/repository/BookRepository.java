@@ -1,14 +1,15 @@
 package com.assessment.bookstore.repository;
 
 import com.assessment.bookstore.model.Book;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.Setter;
+import com.assessment.bookstore.model.Bookstore;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import javax.annotation.PostConstruct;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 /**
@@ -18,71 +19,92 @@ import java.util.stream.Collectors;
  * @AllArgsConstuctor lombok annotation generates constructor with all parameters automatically.
  */
 @Repository
-@Getter
-@Setter
-@AllArgsConstructor
 public class BookRepository{
 
-    public static int bookCount=5;
-    private static List<Book> books=new ArrayList<>();
+    public static int bookCount = 5;
+    private static Map<Bookstore, List<Book>> map = new HashMap<Bookstore, List<Book>>();
+
+    private CategoryRepository categoryRepository;
+
+    private BookstoreRepository bookstoreRepository;
 
     @Autowired
-    private static CategoryRepository categoryRepository = new CategoryRepository();
+    public BookRepository(CategoryRepository categoryRepository, BookstoreRepository bookstoreRepository) {
+        this.categoryRepository = categoryRepository;
+        this.bookstoreRepository = bookstoreRepository;
+    }
 
-    @Autowired
-    private static BookstoreRepository bookstoreRepository = new BookstoreRepository();
-
-    static
+    @PostConstruct
+    public void loadData()
     {
-        books.add(new Book(1, "John",categoryRepository.getCategory("fiction"), bookstoreRepository.getBookstore("store1"),4*bookstoreRepository.getBookstore("store1").getBookFactor()));
-        books.add(new Book(2, "Robert",categoryRepository.getCategory("child"), bookstoreRepository.getBookstore("store2"), 5*bookstoreRepository.getBookstore("store2").getBookFactor()));
-        books.add(new Book(3, "Adam", categoryRepository.getCategory("mystery"), bookstoreRepository.getBookstore("store3"), 3*bookstoreRepository.getBookstore("store3").getBookFactor()));
-        books.add(new Book(4, "Andrew", categoryRepository.getCategory("short story"), bookstoreRepository.getBookstore("store4"), 3*bookstoreRepository.getBookstore("store4").getBookFactor()));
-        books.add(new Book(5, "Jack", categoryRepository.getCategory("biography"), bookstoreRepository.getBookstore("store5"), 1*bookstoreRepository.getBookstore("store5").getBookFactor()));
-        books.add(new Book(6, "Jack", categoryRepository.getCategory("biography"), bookstoreRepository.getBookstore("store2"), 3*bookstoreRepository.getBookstore("store2").getBookFactor()));
+        List<Book> books = new ArrayList<>();
+        List<Book> books2 = new ArrayList<>();
+        Book book1 = new Book(1, "John", categoryRepository.getCategory("fiction"), 4);
+        Book book2 = new Book(2, "Robert", categoryRepository.getCategory("child"), 5);
+        Book book3 = new Book(3, "Adam", categoryRepository.getCategory("mystery"), 3);
+        Book book4 = new Book(4, "Andrew", categoryRepository.getCategory("short story"), 3);
+        Book book5 = new Book(5, "Jack", categoryRepository.getCategory("biography"), 7);
+        books.add(book1);
+        books.add(book2);
+        books.add(book4);
+        books2.add(book3);
+        books2.add(book4);
+        books2.add(book5);
+        map.put(bookstoreRepository.getBookstore("store1"),books);
+        map.put(bookstoreRepository.getBookstore("store2"),books2);
     }
 
     public List<Book> getAllBooks() {
-        return books;
+        List<Book> bookList = new ArrayList<>();
+        map.values().stream().forEach(books -> books.stream().forEach(book -> {
+            bookList.add(book);
+        }));
+        return bookList;
     }
 
     public Book getBook(String bookName) {
-        return books.stream().filter(book -> bookName.equals(book.getName())).
+        List<Book> bookList = getAllBooks();
+        return bookList.stream().filter(book -> bookName.equals(book.getName())).
                 findFirst().orElse(null);
     }
 
-    public void create(Book book) {
+    public void create(Book book, String store) {
         if (book.getId() == null) {
             book.setId(bookCount++);
         }
-        book.setPrice(book.getPrice()*book.getBookstore().getBookFactor());
-        books.add(book);
+        List<Book> bookList = map.get(bookstoreRepository.getBookstore(store));
+        bookList.add(book);
+        map.put(bookstoreRepository.getBookstore(store), bookList);
         bookCount++;
     }
 
     public List<Book> getBooksByCategory(String categoryName) {
-        List<Book> bookList = books.stream().filter(book -> book.getCategory().getName().equals(categoryName)).collect(Collectors.toList());
-        return bookList;
+        List<Book> bookList = getAllBooks();
+        return bookList.stream().filter(book -> book.getCategory().getName().equals(categoryName)).collect(Collectors.toList());
     }
 
     public List<Book> getBooksByBookstore(String bookstoreName) {
-        return books.stream().filter(book -> book.getBookstore().getName().equals(bookstoreName)).collect(Collectors.toList());
+        List<Book> bookList = new ArrayList<>();
+        for (Book b: map.get(bookstoreRepository.getBookstore(bookstoreName))) {
+            b.setPrice(b.getPrice()*bookstoreRepository.getBookstore(bookstoreName).getBookFactor());
+            bookList.add(b);
+        }
+        return bookList;
     }
 
    public void changeCategory(String bookName, String categoryName) {
-        books.stream().forEach(book -> {
-            if (book.getName().equals(bookName)) {
-                book.setCategory(categoryRepository.getCategory(categoryName));
-            }
-        });
+       map.values().stream().forEach(books -> books.stream().forEach(book -> {
+           if (book.getName().equals(bookName)) {
+               book.setCategory(categoryRepository.getCategory(categoryName));
+           }
+       }));
     }
 
     public void removeBook(int id) {
-        books.stream().forEach(book -> {
+        map.values().stream().forEach(books -> books.stream().forEach(book -> {
             if(book.getId().equals(id)) {
                 books.remove(book);
             }
-        });
+        }));
     }
-
 }

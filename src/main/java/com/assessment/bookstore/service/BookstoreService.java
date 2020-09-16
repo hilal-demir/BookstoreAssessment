@@ -28,7 +28,7 @@ public interface BookstoreService {
 
     Book getBook(String bookName);
 
-    void create(Book book);
+    void create(Book book, String store);
 
     List<Book> getBooksByCategory(String categoryName);
 
